@@ -14,10 +14,6 @@ export class AppComponent {
   constructor(private httpClient: HttpClient) {
 
   }
-  @HostListener('click')
-  onKeyPress() {
-    this.counter = 3;
-  }
 
   ngOnInit() {
     this.timer = setInterval(() => {
