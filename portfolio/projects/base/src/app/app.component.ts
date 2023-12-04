@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, HostListener } from '@angular/core';
+import { Component, ElementRef, HostListener, Input, TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Component({
   selector: 'app-root',
@@ -7,22 +7,25 @@ import { Component, HostListener } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+  @Input() param = false;
   title = 'base';
   counter = 3;
   timer: any;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private containerRef: ViewContainerRef, private templateRef: ElementRef) {
 
   }
 
   ngOnInit() {
-    this.timer = setInterval(() => {
-      console.log('COUNTER', this.counter);
-      this.counter--;
-      if (this.counter === 0) {
-        this.httpClient.get('https://jsonplaceholder.typicode.com/todos/1').subscribe(x => console.log(x));
-        clearInterval(this.timer);
-      }
-    }, 1000);
+    this.containerRef.clear();
+
+  }
+
+  ngOnChanges(){
+    // if(this.param) {
+    //   this.containerRef.createEmbeddedView(this.templateRef);
+    // } else {
+    //   this.containerRef.clear();
+    // }
   }
 }
